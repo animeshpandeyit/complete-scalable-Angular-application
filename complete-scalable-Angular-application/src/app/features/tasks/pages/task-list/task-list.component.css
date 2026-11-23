@@ -1,0 +1,23 @@
+.task-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.monitor-card,
+.notification-card {
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: #f1f5f9;
+}
+
+.monitor-card h1 {
+  font-size: 48px;
+  color: #2563eb;
+}
+
+.notification-card {
+  background: #dcfce7;
+}
