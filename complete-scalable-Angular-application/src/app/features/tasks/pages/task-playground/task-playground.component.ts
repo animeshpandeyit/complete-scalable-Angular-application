@@ -127,12 +127,19 @@ export class TaskPlaygroundComponent implements OnInit {
     const dropdown$ = fromEvent(
       this.prioritySelect.nativeElement,
       'change',
-    ).pipe(map((event) => (event.target as HTMLOptionElement).value));
+    ).pipe(map((event) => (event.target as HTMLSelectElement).value));
 
     dropdown$.subscribe((value) => {
-      console.log('dropdown Search text:', value);
+      console.log('Selected priority:', value);
       takeUntilDestroyed(this.destroyRef);
     });
+
+    //     HTML tag	TypeScript DOM type
+    // <input>	HTMLInputElement
+    // <select>	HTMLSelectElement
+    // <option>	HTMLOptionElement
+    // <button>	HTMLButtonElement
+    // <textarea>	HTMLTextAreaElement
   }
 
   ngOnDestroy(): void {
