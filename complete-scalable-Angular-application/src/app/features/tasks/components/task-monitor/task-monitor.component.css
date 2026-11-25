@@ -1,0 +1,21 @@
+.monitor-container {
+  padding: 24px;
+}
+
+.monitor-card {
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  p {
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
+
+.notification {
+  padding: 16px;
+  background: #e8f4ff;
+  border-radius: 8px;
+}

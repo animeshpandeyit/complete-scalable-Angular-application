@@ -15,4 +15,12 @@ export const routes: Routes = [
         (m) => m.TaskPlaygroundComponent,
       ),
   },
+
+  {
+    path: 'task-monitor',
+    loadComponent: () =>
+      import('./features/tasks/components/task-monitor/task-monitor.component').then(
+        (m) => m.TaskMonitorComponent,
+      ),
+  },
 ];
