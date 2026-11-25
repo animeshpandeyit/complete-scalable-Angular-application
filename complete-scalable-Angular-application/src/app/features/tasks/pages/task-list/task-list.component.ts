@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { TaskEventsService } from '../../../../core/services/task-events.service';
@@ -15,7 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css',
 })
