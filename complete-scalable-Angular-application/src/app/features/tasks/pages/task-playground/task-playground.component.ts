@@ -134,6 +134,12 @@ export class TaskPlaygroundComponent implements OnInit {
       takeUntilDestroyed(this.destroyRef);
     });
 
+    // const option = document.querySelector('option');
+
+    // console.log(option?.value);
+    // console.log(option?.text);
+    // console.log(option?.selected);
+
     //     HTML tag	TypeScript DOM type
     // <input>	HTMLInputElement
     // <select>	HTMLSelectElement
