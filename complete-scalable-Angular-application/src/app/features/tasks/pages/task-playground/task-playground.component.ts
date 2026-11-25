@@ -1,6 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
+import { fromEvent, map, Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-task-playground',
@@ -12,8 +21,28 @@ import { TaskService } from '../../services/task.service';
 export class TaskPlaygroundComponent implements OnInit {
   tasks: Task[] = [];
   tasksTitle: string[] = [];
+  tasksTitleof: string[] = [];
+
+  @ViewChild('searchInput')
+  searchInput!: ElementRef<HTMLInputElement>;
+
+  @ViewChild('clearButton')
+  clearButton!: ElementRef<HTMLButtonElement>;
+
+  @ViewChild('enteredText')
+  enteredText!: ElementRef<HTMLInputElement>;
+
+  @ViewChild('prioritySelect')
+  prioritySelect!: ElementRef<HTMLOptionElement>;
+
+  @ViewChild('taskCreated')
+  taskCreated!: ElementRef<HTMLButtonElement>;
+
+  private subscriptions = new Subscription();
 
   private taskService = inject(TaskService);
+
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     // of(): one emission containing the array
@@ -32,5 +61,81 @@ export class TaskPlaygroundComponent implements OnInit {
 
       this.tasksTitle = [...this.tasksTitle, title];
     });
+
+    this.taskService.getTaskStatusesUsingOf().subscribe((statuses) => {
+      console.log('Statuses Using of():', statuses);
+
+      this.tasksTitleof = [...statuses];
+    });
+  }
+
+  // ngAfterViewInit(): void {
+  //   const search$ = fromEvent(this.searchInput.nativeElement, 'input');
+
+  //   // const search$ = fromEvent(this.searchInput.nativeElement, 'input').pipe(
+  //   //   map((event) => (event.target as HTMLInputElement).value),
+  //   // );
+
+  //   // const searchSubscription = search$.subscribe((value) => {
+  //   //   console.log('Search text:', value);
+  //   // });
+
+  //   const searchSubscription = search$.subscribe((event) => {
+  //     const input = event.target as HTMLInputElement;
+  //     console.log('Search value:', input.value);
+  //   });
+
+  //   const clearSubscription = fromEvent(
+  //     this.clearButton.nativeElement,
+  //     'click',
+  //   ).subscribe(() => {
+  //     this.searchInput.nativeElement.value = '';
+  //     console.log('Search cleared');
+  //   });
+
+  //   this.subscriptions.add(searchSubscription);
+  //   this.subscriptions.add(clearSubscription);
+
+  //   fromEvent(this.searchInput.nativeElement, 'input')
+  //     .pipe(
+  //       map((event) => (event.target as HTMLInputElement).value),
+  //       takeUntilDestroyed(this.destroyRef),
+  //     )
+  //     .subscribe((value) => {
+  //       console.log('Search:', value);
+  //     });
+  // }
+
+  ngAfterViewInit(): void {
+    // const search$ = fromEvent(this.enteredText.nativeElement, 'input').pipe(
+    //   map((event) => (event.target as HTMLInputElement).value),
+    // );
+
+    const search$ = fromEvent(this.enteredText.nativeElement, 'input').pipe(
+      map((event) => (event.target as HTMLInputElement).value),
+    );
+
+    search$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      console.log('enteredText Search text:', value);
+    });
+
+    fromEvent(this.taskCreated.nativeElement, 'click').subscribe(() => {
+      this.taskCreated.nativeElement.value = '';
+      console.log('Task Created');
+    });
+
+    const dropdown$ = fromEvent(
+      this.prioritySelect.nativeElement,
+      'change',
+    ).pipe(map((event) => (event.target as HTMLOptionElement).value));
+
+    dropdown$.subscribe((value) => {
+      console.log('dropdown Search text:', value);
+      takeUntilDestroyed(this.destroyRef);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

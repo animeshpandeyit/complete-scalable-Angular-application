@@ -1,5 +1,5 @@
 import { Injectable, resolveForwardRef } from '@angular/core';
-import { from, interval, map, Observable, of, timer } from 'rxjs';
+import { from, interval, map, Observable, of, tap, timer } from 'rxjs';
 import { Task } from '../models/task';
 
 @Injectable({
@@ -158,5 +158,12 @@ export class TaskService {
 
   getTaskTitlesUsingFrom(): Observable<string> {
     return from(this.tasks).pipe(map((task) => task.title));
+  }
+
+  getTaskStatusesUsingOf(): Observable<string[]> {
+    return of(this.tasks).pipe(
+      map((tasks) => tasks.map((task) => task.status)),
+      tap(),
+    );
   }
 }

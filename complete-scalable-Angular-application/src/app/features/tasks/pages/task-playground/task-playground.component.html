@@ -1,15 +1,46 @@
 <h2>Task Data Playground</h2>
 
 @for (task of tasks; track task.id) {
-  <div>
-    <h3>{{ task.title }}</h3>
-    <p>Status: {{ task.status }}</p>
-    <p>Priority: {{ task.priority }}</p>
-  </div>
+<div>
+  <h3>{{ task.title }}</h3>
+  <p>Status: {{ task.status }}</p>
+  <p>Priority: {{ task.priority }}</p>
+</div>
 }
+<p>tasksTitle</p>
 
 @for (task of tasksTitle; track task) {
-  <div>
-    <h3>{{ task }}</h3>
-  </div>
+<div>
+  <h3>{{ task }}</h3>
+</div>
 }
+<p>tasksTitleof</p>
+
+@for (task of tasksTitleof; track task) {
+<div>
+  <h3>{{ task }}</h3>
+</div>
+}
+
+
+<h2>Task Search Playground</h2>
+
+<input #searchInput type="text" placeholder="Search tasks..." />
+
+<button #clearButton>
+  Clear Search
+</button>
+
+<!--  -->
+<p>Practice assignment</p>
+
+<input type="text" name="entered text" id="" #enteredText>
+
+<button type="button" #taskCreated>Task Created</button>
+
+<select #prioritySelect>
+  <option value="All">All</option>
+  <option value="Low">Low</option>
+  <option value="Medium">Medium</option>
+  <option value="High">High</option>
+</select>
