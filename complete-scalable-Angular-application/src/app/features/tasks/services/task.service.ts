@@ -1,5 +1,15 @@
 import { Injectable, resolveForwardRef } from '@angular/core';
-import { from, interval, map, Observable, of, tap, timer } from 'rxjs';
+import {
+  defer,
+  from,
+  interval,
+  map,
+  Observable,
+  of,
+  range,
+  tap,
+  timer,
+} from 'rxjs';
 import { Task } from '../models/task';
 
 @Injectable({
@@ -144,6 +154,12 @@ export class TaskService {
       status: 'Completed',
       priority: 'Low',
     },
+    {
+      id: 4,
+      title: 'Practice Dashboard',
+      status: 'In Progress',
+      priority: 'Medium',
+    },
   ];
 
   // Complete array as one emission
@@ -166,4 +182,29 @@ export class TaskService {
       tap(),
     );
   }
+
+  // Generate task IDs
+  generateTaskIds() {
+    // return range(1, 5).pipe(map((id) => `TASK-${id}`));
+    return range(101, 10).pipe(map((id) => `TASK-${id}`));
+  }
+
+  // Get latest task count at subscription time
+  getTaskCount(): Observable<number> {
+    return defer(() => {
+      const count = this.tasks.length;
+      console.log('Fetching latest task count');
+
+      return of(count);
+    });
+  }
+  addTask(task: Task): void {
+    this.tasks.push(task);
+  }
+
+  // private tasks = [
+  //   { id: 1, title: 'Learn RxJS' },
+  //   { id: 2, title: 'Build Task Dashboard' },
+  //   { id: 3, title: 'Practice Angular' },
+  // ];
 }

@@ -1,19 +1,27 @@
 <div class="monitor-container">
+  <h2>TaskFlow Live Monitor</h2>
 
-    <h2>TaskFlow Live Monitor</h2>
+  <div class="monitor-card">
+    <h3>Live Counter</h3>
+    <p>{{ counter }} seconds</p>
+  </div>
 
-    <div class="monitor-card">
-        <h3>Live Counter</h3>
-        <p>{{ counter }} seconds</p>
-    </div>
+  <div class="monitor-card">
+    <h3>Task Refresh Count</h3>
+    <p>{{ refreshCount }}</p>
+  </div>
 
-    <div class="monitor-card">
-        <h3>Task Refresh Count</h3>
-        <p>{{ refreshCount }}</p>
-    </div>
-
-    <div class="notification">
-        {{ notification || 'Waiting for notification...' }}
-    </div>
-
+  <div class="notification">
+    {{ notification || "Waiting for notification..." }}
+  </div>
 </div>
+
+<h2>Task ID Generator</h2>
+
+@for (id of taskIds; track id) {
+  <p>{{ id }}</p>
+}
+
+<h2>Task Count</h2>
+<p>{{ taskCount }}</p>
+<p>{{ taskCount1 }}</p>
